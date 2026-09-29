@@ -19,6 +19,7 @@ jobs:
       - uses: hashicorp/setup-terraform@v4
       - run: terraform init -backend-config="key=dev.tfstate"
       - run: terraform apply -auto-approve -var-file=envs/dev.tfvars
+      - run: terraform destroy --auto-approve -var-file=envs/dev.tfvars
 
   staging:
     needs: dev
@@ -32,6 +33,7 @@ jobs:
       - uses: hashicorp/setup-terraform@v4
       - run: terraform init -backend-config="key=staging.tfstate"
       - run: terraform apply -auto-approve -var-file=envs/staging.tfvars
+      - run: terraform destroy --auto-approve -var-file=envs/staging.tfvars
 
   prod:
     needs: staging
@@ -45,3 +47,4 @@ jobs:
       - uses: hashicorp/setup-terraform@v4
       - run: terraform init -backend-config="key=prod.tfstate"
       - run: terraform apply -auto-approve -var-file=envs/prod.tfvars
+      - run: terraform destroy --auto-approve -var-file=envs/prod.tfvars
